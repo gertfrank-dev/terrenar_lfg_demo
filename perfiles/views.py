@@ -11,6 +11,7 @@ from django.views.decorators.http import require_POST
 
 from match.motor import PREFETCH, ficha_desde_perfil, ordenar
 
+from .forms import PASOS
 from .models import ATRIBUTOS, EJES, Interes, LimiteTema, Perfil, hay_interes_mutuo
 
 ATR_CORTOS = ("COMBATE", "EXPLOR.", "INTERP.", "MISTERIO", "ESTRAT.", "HUMOR")
@@ -40,15 +41,16 @@ def _mi_perfil(request):
 def mi_perfil(request):
     yo = _mi_perfil(request)
     if not yo:
-        return render(request, "sin_perfil.html")
+        return redirect("ficha", paso="quien")
     return redirect("perfil", pk=yo.pk)
 
 
 @login_required
 def explorar(request):
     yo = _mi_perfil(request)
-    if not yo:
-        return redirect("mi_perfil")
+    if not yo or not yo.publicado:
+        messages.info(request, "Completa y publica tu ficha para ver con quién haces match.")
+        return redirect("ficha", paso=siguiente_paso_pendiente(yo))
     filtro_rol = request.GET.get("rol", "todos")
     candidatas = Perfil.objects.filter(publicado=True).exclude(pk=yo.pk).prefetch_related(*PREFETCH)
     if filtro_rol in ("jugador", "master"):
@@ -93,7 +95,10 @@ def _contexto_perfil(request, p):
 
 
 def perfil(request, pk):
-    p = get_object_or_404(Perfil.objects.prefetch_related(*PREFETCH), pk=pk, publicado=True)
+    p = get_object_or_404(Perfil.objects.prefetch_related(*PREFETCH), pk=pk)
+    es_dueno = request.user.is_authenticated and p.usuario_id == request.user.pk
+    if not p.publicado and not es_dueno:
+        raise Http404
     return render(request, "perfil.html", _contexto_perfil(request, p))
 
 
@@ -117,3 +122,55 @@ def interes(request, pk):
     if request.htmx:
         return render(request, "parciales/interes.html", ctx)
     return redirect("perfil", pk=pk)
+
+
+# ------------------------------------------------------------------ onboarding
+def siguiente_paso_pendiente(p):
+    """Primer paso que falta completar."""
+    if p is None:
+        return "quien"
+    if not p.disponibilidad.exists():
+        return "logistica"
+    if not p.dados_completos:
+        return "estilo"
+    if not p.limites.exists():
+        return "seguridad"
+    return "vibra"
+
+
+@login_required
+def ficha(request, paso):
+    claves = [c for c, *_ in PASOS]
+    if paso not in claves:
+        raise Http404
+    i = claves.index(paso)
+    _, titulo, Form = PASOS[i]
+    yo = Perfil.objects.filter(usuario=request.user).first()
+    if yo is None and paso != "quien":
+        return redirect("ficha", paso="quien")
+    instancia = yo or Perfil(usuario=request.user)
+
+    if request.method == "POST":
+        form = Form(request.POST, request.FILES, instance=instancia)
+        if form.is_valid():
+            perfil = form.save()
+            if i + 1 < len(PASOS):
+                return redirect("ficha", paso=claves[i + 1])
+            # Último paso: publicar
+            perfil.publicado = True
+            perfil.save(update_fields=["publicado"])
+            messages.success(request, "Tu ficha está publicada. Estas son las personas con quienes podrías jugar.")
+            return redirect("explorar")
+    else:
+        form = Form(instance=instancia)
+
+    return render(request, f"ficha/{paso}.html", {
+        "form": form,
+        "paso": paso,
+        "numero": i + 1,
+        "total": len(PASOS),
+        "titulo": titulo,
+        "pasos": [(c, t, j < i or (yo and j <= claves.index(siguiente_paso_pendiente(yo)))) for j, (c, t, _) in enumerate(PASOS)],
+        "anterior": claves[i - 1] if i else None,
+        "ultimo": i + 1 == len(PASOS),
+    })

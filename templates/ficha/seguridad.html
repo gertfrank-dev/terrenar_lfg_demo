@@ -1,0 +1,23 @@
+{% extends "ficha/base_ficha.html" %}
+{% block intro %}<p>Tus <strong>líneas</strong> (lo que no debe aparecer nunca) y <strong>velos</strong> (puede pasar, pero fuera de escena). <strong>Lo busco</strong> marca lo que te gusta que aparezca. Todo esto es privado: solo lo ve quien tenga interés mutuo contigo.</p>{% endblock %}
+{% block campos %}
+<ul class="leyenda-estados">
+  <li><b class="estado-op-busco">Lo busco</b> quiero que aparezca</li>
+  <li><b>OK</b> puede aparecer</li>
+  <li><b class="estado-op-velo">Velo</b> fuera de escena</li>
+  <li><b class="estado-op-linea">Línea</b> nunca</li>
+</ul>
+{% for categoria, campos in form.grupos_temas %}
+<section class="grupo-temas" aria-labelledby="cat-{{ forloop.counter }}">
+  <h2 id="cat-{{ forloop.counter }}" class="rotulo">{{ categoria|upper }}</h2>
+  {% for f in campos %}
+  <fieldset class="tema">
+    <legend>{{ f.label }}</legend>
+    <div class="estados">{% for op in f %}<label class="estado-op estado-op-{{ op.data.value }}">{{ op.tag }}<span>{{ op.choice_label }}</span></label>{% endfor %}</div>
+  </fieldset>
+  {% endfor %}
+</section>
+{% endfor %}
+{% include "ficha/campo.html" with f=form.herramientas %}
+{% include "ficha/campo.html" with f=form.conductas_no_tolera %}
+{% endblock %}

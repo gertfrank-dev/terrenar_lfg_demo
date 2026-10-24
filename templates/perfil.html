@@ -60,6 +60,8 @@
       <h2>Tus límites</h2>
       <p class="nota">Solo tú los ves. Se muestran a otra persona cuando ambos marcan interés.</p>
       {% include "parciales/limites.html" %}
+      <p><a class="btn btn-linea" href="{% url 'ficha' 'quien' %}">Editar mi ficha</a></p>
+      {% if not p.publicado %}<p class="nota">Tu ficha aún no está publicada: termina los pasos para aparecer en Explorar.</p>{% endif %}
     </section>
     {% endif %}
     <section class="recuadro" aria-labelledby="t-mesa">

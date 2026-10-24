@@ -1,0 +1,40 @@
+{% extends "ficha/base_ficha.html" %}
+{% block intro %}<p>La parte más importante del match. Primero tus seis atributos, como al crear un personaje.</p>{% endblock %}
+{% block campos %}
+<section class="dados" data-dados aria-labelledby="t-dados">
+  <h2 id="t-dados">Atributos</h2>
+  <p class="ayuda">Tira los dados y reparte los resultados: el más alto en lo que más disfrutas. Están cargados, así que siempre salen <span class="num">15, 14, 13, 12, 10 y 8</span>. Cada valor se usa una vez.</p>
+  <div class="bandeja" hidden data-bandeja>
+    <button type="button" class="btn btn-rubrica" data-tirar>Tirar los dados</button>
+    <div class="dados-lista" data-lista aria-live="polite"></div>
+    <p class="nota" data-instruccion></p>
+  </div>
+  <div class="atributos-ficha">
+    {% for f in form.campos_atributos %}
+    <div class="casilla-atr{% if f.errors %} con-error{% endif %}" data-casilla>
+      <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+      {{ f }}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="t-ejes">
+  <h2 id="t-ejes">Ejes de estilo</h2>
+  <p class="ayuda">Aquí no hay mejor ni peor: elige el punto entre los dos extremos donde te sientes más cómodo.</p>
+  <div class="ejes-ficha">
+    {% for f, bajo, alto in form.campos_ejes %}{% include "ficha/campo.html" %}{% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="t-sis">
+  <h2 id="t-sis">Sistemas</h2>
+  <div class="sistemas-ficha">
+    {% for f in form.campos_sistemas %}{% include "ficha/campo.html" %}{% endfor %}
+  </div>
+</section>
+
+{% include "ficha/campo.html" with f=form.tonos %}
+{% include "ficha/campo.html" with f=form.arquetipos %}
+{% include "ficha/campo.html" with f=form.ambientaciones %}
+{% endblock %}

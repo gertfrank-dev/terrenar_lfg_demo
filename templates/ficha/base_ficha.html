@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}{{ titulo }} · Tu ficha · Bestiario de Jugadores{% endblock %}
+{% block contenido %}
+<div class="contenedor ficha">
+  <nav aria-label="Pasos de tu ficha">
+    <ol class="pasos-ficha">
+      {% for clave, nombre, listo in pasos %}
+      <li{% if clave == paso %} aria-current="step"{% endif %}>
+        {% if listo and clave != paso %}<a href="{% url 'ficha' clave %}">{% endif %}<span class="num">{{ forloop.counter }}</span> {{ nombre }}{% if listo and clave != paso %}</a>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </nav>
+  <div class="titulo-pagina">
+    <p class="rotulo">Tu ficha · paso {{ numero }} de {{ total }}</p>
+    <h1>{{ titulo }}</h1>
+    {% block intro %}{% endblock %}
+  </div>
+  <form method="post" enctype="multipart/form-data" novalidate class="form-ficha">
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="error-general" role="alert">{{ form.non_field_errors|join:" " }}</div>{% endif %}
+    {% block campos %}{% endblock %}
+    <div class="navegacion-ficha">
+      {% if anterior %}<a class="btn btn-linea" href="{% url 'ficha' anterior %}">Volver</a>{% endif %}
+      <button class="btn {% if ultimo %}btn-rubrica{% endif %}" type="submit">{% if ultimo %}Publicar mi ficha{% else %}Guardar y continuar{% endif %}</button>
+    </div>
+  </form>
+</div>
+<script src="{% static 'js/ficha.js' %}" defer></script>
+{% endblock %}

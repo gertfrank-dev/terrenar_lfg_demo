@@ -1,0 +1,10 @@
+{% extends "ficha/base_ficha.html" %}
+{% block intro %}<p>Lo último: cómo te gusta que sea la mesa. Después publicas tu ficha y ves con quién haces match.</p>{% endblock %}
+{% block campos %}
+{% include "ficha/campo.html" with f=form.ambiente %}
+{% include "ficha/campo.html" with f=form.alcohol %}
+{% include "ficha/campo.html" with f=form.comida %}
+{% include "ficha/campo.html" with f=form.tabaco %}
+{% include "ficha/campo.html" with f=form.busca_amistad %}
+{% include "ficha/campo.html" with f=form.historia %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load ficha %}{% comment %}Un campo del formulario: etiqueta, ayuda, errores y control. Las listas de opciones van en un fieldset.{% endcomment %}
+{% if f.field.widget.allow_multiple_selected or f.field.widget.input_type == "radio" %}
+<fieldset class="campo{% if f.errors %} con-error{% endif %}">
+  <legend>{{ f.label }}</legend>
+  {% if f.help_text %}<p class="ayuda" id="{{ f.auto_id }}_helptext">{{ f.help_text }}</p>{% endif %}
+  <div class="opciones">{{ f }}</div>
+  {% if f.errors %}<p class="error" id="{{ f.auto_id }}_error">{{ f.errors|join:" " }}</p>{% endif %}
+</fieldset>
+{% elif f.field.widget.input_type == "checkbox" %}
+<div class="campo campo-casilla{% if f.errors %} con-error{% endif %}">
+  <label for="{{ f.id_for_label }}">{{ f }} {{ f.label }}</label>
+  {% if f.errors %}<p class="error">{{ f.errors|join:" " }}</p>{% endif %}
+</div>
+{% elif f.field.widget.input_type == "range" %}
+<div class="campo campo-rango{% if f.errors %} con-error{% endif %}">
+  <div class="rango-cabecera"><label for="{{ f.id_for_label }}">{{ f.label }}</label> <output for="{{ f.id_for_label }}" class="num">{{ f.value|default:3 }}</output></div>
+  {{ f }}
+  <span class="extremos" aria-hidden="true"><span>{{ f.field.widget.attrs|attr:"data-bajo" }}</span><span>{{ f.field.widget.attrs|attr:"data-alto" }}</span></span>
+</div>
+{% else %}
+<div class="campo{% if f.errors %} con-error{% endif %}">
+  <label for="{{ f.id_for_label }}">{{ f.label }}{% if not f.field.required %} <span class="opcional">(opcional)</span>{% endif %}</label>
+  {% if f.help_text %}<p class="ayuda" id="{{ f.auto_id }}_helptext">{{ f.help_text }}</p>{% endif %}
+  {{ f }}
+  {% if f.errors %}<p class="error" id="{{ f.auto_id }}_error">{{ f.errors|join:" " }}</p>{% endif %}
+</div>
+{% endif %}

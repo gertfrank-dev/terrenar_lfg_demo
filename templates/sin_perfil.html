@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block contenido %}
-<div class="contenedor titulo-pagina">
-  <p class="rotulo">Página en blanco</p>
-  <h1>Aún no tienes ficha</h1>
-  <p>El formulario para crear tu ficha (horario, dados de estilo y líneas) es lo próximo que se construye. Mientras tanto, puedes recorrer el sitio con un perfil de demo.</p>
-  <form method="post" action="{% url 'entrar_demo' %}">{% csrf_token %}<button class="btn" type="submit">Usar el perfil de demo</button></form>
-</div>
-{% endblock %}

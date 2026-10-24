@@ -1,0 +1,17 @@
+{% extends "ficha/base_ficha.html" %}
+{% block intro %}<p>Lo básico para que otras personas sepan con quién van a jugar.</p>{% endblock %}
+{% block campos %}
+<div class="grupo-campos">
+  {% include "ficha/campo.html" with f=form.alias %}
+  {% include "ficha/campo.html" with f=form.fecha_nacimiento %}
+</div>
+{% include "ficha/campo.html" with f=form.rol %}
+{% include "ficha/campo.html" with f=form.experiencia %}
+{% include "ficha/campo.html" with f=form.novatos %}
+{% include "ficha/campo.html" with f=form.idiomas_lista %}
+<div class="grupo-campos">
+  {% include "ficha/campo.html" with f=form.contacto_discord %}
+  {% include "ficha/campo.html" with f=form.contacto_correo %}
+</div>
+{% include "ficha/campo.html" with f=form.retrato %}
+{% endblock %}

@@ -11,6 +11,7 @@ urlpatterns = [
     path("entrar-demo/", views.entrar_demo, name="entrar_demo"),
     path("explorar/", views.explorar, name="explorar"),
     path("mi-perfil/", views.mi_perfil, name="mi_perfil"),
+    path("ficha/<slug:paso>/", views.ficha, name="ficha"),
     path("p/<int:pk>/", views.perfil, name="perfil"),
     path("p/<int:pk>/interes/", views.interes, name="interes"),
     path("cuenta/", include("allauth.urls")),

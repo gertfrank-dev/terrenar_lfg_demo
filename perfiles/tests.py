@@ -59,3 +59,59 @@ class Reglas(TestCase):
         p.atr_humor = 15  # el 15 ya está en combate
         with self.assertRaises(IntegrityError), transaction.atomic():
             p.save()
+
+
+class Onboarding(TestCase):
+    """Recorre los 5 pasos de la ficha como lo haría una persona nueva."""
+
+    def setUp(self):
+        from perfiles.models import Plataforma, Sistema
+        self.plataforma = Plataforma.objects.create(nombre="Discord")
+        self.sistema = Sistema.objects.create(nombre="Sistema de prueba")
+        self.tema = Tema.objects.create(nombre="Arañas", categoria="Fobias")
+        u = get_user_model().objects.create_user(username="nueva", email="nueva@x.cl", password="clave-larga-123")
+        self.client.force_login(u)
+
+    def quien(self, **extra):
+        datos = dict(alias="Nueva", fecha_nacimiento="1995-05-05", rol="jugador", experiencia="nuevo",
+                     novatos="igual", contacto_discord="nueva#1", idiomas_lista=["es"])
+        datos.update(extra)
+        return self.client.post("/ficha/quien/", datos)
+
+    def test_sin_ficha_mi_perfil_lleva_al_primer_paso(self):
+        self.assertRedirects(self.client.get("/mi-perfil/"), "/ficha/quien/")
+
+    def test_menor_de_18_no_avanza(self):
+        r = self.quien(fecha_nacimiento=f"{date.today().year - 16}-01-01")
+        self.assertEqual(r.status_code, 200)
+        self.assertFalse(Perfil.objects.exists())
+
+    def test_dados_repetidos_no_avanzan(self):
+        self.quien()
+        datos = {c: 15 for c in DADOS} | {f"sis_{self.sistema.pk}": "conoce"}
+        datos |= dict(eje_enfoque=3, eje_mundo=3, eje_reglas=3, eje_ritmo=3, eje_profundidad=3,
+                      eje_intensidad=3, letalidad=3)
+        r = self.client.post("/ficha/estilo/", datos)
+        self.assertContains(r, "Cada dado se usa una sola vez")
+
+    def test_recorrido_completo_publica_la_ficha(self):
+        self.assertRedirects(self.quien(), "/ficha/logistica/")
+        hoy = date.today().isoformat()
+        r = self.client.post("/ficha/logistica/", dict(
+            modalidad="online", plataformas=[self.plataforma.pk], one_shot="on", mesa_pagada="gratis",
+            bloques=[f"{hoy}|18", f"{hoy}|20"]))
+        self.assertRedirects(r, "/ficha/estilo/")
+        datos = dict(DADOS) | {f"sis_{self.sistema.pk}": "quiere"}
+        datos |= dict(eje_enfoque=2, eje_mundo=3, eje_reglas=4, eje_ritmo=3, eje_profundidad=5,
+                      eje_intensidad=3, letalidad=2)
+        self.assertRedirects(self.client.post("/ficha/estilo/", datos), "/ficha/seguridad/")
+        r = self.client.post("/ficha/seguridad/", {f"tema_{self.tema.pk}": "linea"})
+        self.assertRedirects(r, "/ficha/vibra/")
+        r = self.client.post("/ficha/vibra/", dict(ambiente=3, alcohol="igual", comida="si", tabaco="no"))
+        self.assertRedirects(r, "/explorar/")
+
+        p = Perfil.objects.get(alias="Nueva")
+        self.assertTrue(p.publicado)
+        self.assertEqual(p.disponibilidad.count(), 2)
+        self.assertEqual(p.limites.get().estado, "linea")
+        self.assertEqual(p.perfilsistema_set.get().relacion, "quiere")

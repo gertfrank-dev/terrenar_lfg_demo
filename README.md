@@ -17,7 +17,7 @@ Encuentra personas para jugar rol de mesa según tres preguntas:
   - Puntaje 0–100 con "coinciden / difieren".
 - **Privacidad en el servidor:** las líneas y el contacto solo se envían al navegador si es tu ficha o hay interés mutuo. Hay pruebas que lo verifican.
 - **Reglas en la base de datos:** una restricción impide repetir dados, y una validación exige ser mayor de 18. La edad nunca se muestra ni se puede filtrar.
-- **21 pruebas automáticas** (`python manage.py test`).
+- **25 pruebas automáticas** (`python manage.py test`), incluido el recorrido completo de crear una ficha.
 - **HTMX:** filtros y botón "Me interesa" sin recargar la página, con la lógica en Python.
 - **Diseño "Bestiario rubricado":** cada perfil se presenta como un bloque de estadísticas de manuscrito iluminado.
 
@@ -62,8 +62,8 @@ docs/           brief, modelo de datos y capturas
   - Datos de demo.
   - Portada, explorar, perfil público e interés mutuo.
   - Login con correo.
+  - Crear tu ficha en 5 pasos: calendario "mi mes" (se pinta arrastrando), tirada de dados y checklist de líneas y velos.
 - **Siguiente:**
-  - Onboarding para crear la ficha: calendario "mi mes", tirada de dados y checklist de límites.
   - Login con Discord (requiere claves de una app de Discord).
   - Deploy en Render.
 

@@ -1,0 +1,48 @@
+{% extends "ficha/base_ficha.html" %}
+{% block intro %}<p>Esto decide con quién puedes jugar de verdad. Si no calza, la otra persona no aparece.</p>{% endblock %}
+{% block campos %}
+{% include "ficha/campo.html" with f=form.modalidad %}
+{% include "ficha/campo.html" with f=form.comunas %}
+{% include "ficha/campo.html" with f=form.plataformas %}
+<fieldset class="campo">
+  <legend>Tipo de partida</legend>
+  <div class="opciones opciones-casillas">
+    {% include "ficha/campo.html" with f=form.one_shot %}
+    {% include "ficha/campo.html" with f=form.campana_corta %}
+    {% include "ficha/campo.html" with f=form.campana_larga %}
+  </div>
+</fieldset>
+{% include "ficha/campo.html" with f=form.anfitrion %}
+{% include "ficha/campo.html" with f=form.mesa_pagada %}
+{% include "ficha/campo.html" with f=form.precio %}
+
+<fieldset class="campo mi-mes{% if form.bloques.errors %} con-error{% endif %}" data-mi-mes>
+  <legend>Mi mes</legend>
+  <p class="ayuda">Marca cuándo podrías jugar en las próximas 4 semanas. Cada casilla es un bloque de 2 horas; una sesión necesita al menos dos seguidos. Puedes arrastrar para marcar varios.</p>
+  {% if form.bloques.errors %}<p class="error" role="alert">{{ form.bloques.errors|join:" " }}</p>{% endif %}
+  {% for semana in form.semanas %}
+  <div class="semana" data-semana="{{ forloop.counter0 }}">
+    <div class="semana-cabecera">
+      <h2 class="rotulo">Semana {{ forloop.counter }}</h2>
+      {% if forloop.first %}<div class="atajos" hidden data-atajos>
+        <button type="button" class="enlace-btn" data-repetir="1">Repetir en todas las semanas</button>
+        <button type="button" class="enlace-btn" data-repetir="2">Repetir semana por medio</button>
+        <button type="button" class="enlace-btn" data-limpiar>Borrar todo</button>
+      </div>{% endif %}
+    </div>
+    <div class="tabla-mes" role="group" aria-label="Semana {{ forloop.counter }}">
+      <span></span>{% for h in semana.0.bloques %}<span class="hora num" aria-hidden="true">{{ h.hora }}</span>{% endfor %}
+      {% for dia in semana %}
+        <span class="dia">{{ dia.fecha|date:"D j" }}</span>
+        {% for b in dia.bloques %}
+          <label class="bloque-hora" title="{{ dia.fecha|date:'l j' }}, {{ b.hora }}:00 a {{ b.hora|add:2 }}:00">
+            <input type="checkbox" name="bloques" value="{{ b.valor }}" {% if b.on %}checked{% endif %}>
+            <span class="sr">{{ dia.fecha|date:"l j \d\e F" }}, de {{ b.hora }} a {{ b.hora|add:2 }} horas</span>
+          </label>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</fieldset>
+{% endblock %}
