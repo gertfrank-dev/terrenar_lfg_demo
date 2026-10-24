@@ -5,3 +5,4 @@ pip install -r requirements.txt
 python manage.py collectstatic --no-input
 python manage.py migrate
 python manage.py poblar_demo
+python manage.py proteger_supabase

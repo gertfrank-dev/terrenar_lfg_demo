@@ -45,6 +45,24 @@ En la portada, **"Probar con un perfil de demo"** entra como Valentina R., una m
 
 Para el panel de administración, crea un usuario con `python manage.py createsuperuser` y entra a `/admin/`.
 
+## Publicarlo (Render + Supabase)
+
+- **Supabase** guarda los datos (PostgreSQL).
+- **Render** corre Django.
+
+Pasos:
+
+1. En Supabase, abre **Connect** y copia la cadena **Session pooler**. Render solo usa IPv4, y la conexión directa de Supabase es IPv6.
+2. En Render, crea un *Blueprint* desde este repo. `render.yaml` crea el servicio solo.
+3. Pega la cadena en la variable `DATABASE_URL`. La clave nunca va en el repositorio.
+4. En cada deploy, `build.sh`:
+   - Instala las dependencias.
+   - Crea las tablas.
+   - Carga la demo.
+   - Ejecuta `proteger_supabase`.
+
+`proteger_supabase` activa *Row Level Security* en todas las tablas. Supabase publica las tablas como una API REST, y sin RLS cualquiera con la clave pública podría leer los perfiles saltándose a Django.
+
 ## Estructura
 
 ```

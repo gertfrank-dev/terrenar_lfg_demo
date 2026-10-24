@@ -71,10 +71,13 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 # Base de datos: SQLite en tu computador; en Render, DATABASE_URL apunta al Postgres de Supabase.
+# Ojo: Render solo usa IPv4, así que se usa la cadena "Session pooler" de Supabase (puerto 5432).
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
+        conn_health_checks=True,  # revisa la conexión antes de usarla (el pooler corta las inactivas)
+        ssl_require=not DEBUG,    # en producción, siempre cifrado
     )
 }
 
