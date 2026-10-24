@@ -136,6 +136,10 @@ class Perfil(models.Model):
     alias = models.CharField(max_length=40)
     fecha_nacimiento = models.DateField(help_text="Solo para comprobar que es mayor de 18. Nunca se muestra.")
     historia = models.TextField("La mejor sesión que he jugado", blank=True, max_length=800)
+    retrato = models.ImageField(
+        "Retrato de tu personaje o criatura", upload_to="retratos/", blank=True,
+        help_text="Opcional. Si no subes uno, se muestra tu inicial como capitular.",
+    )
     contacto_discord = models.CharField(max_length=40, blank=True)
     contacto_correo = models.EmailField(blank=True)
     publicado = models.BooleanField(default=False)

@@ -1,0 +1,1 @@
+<figure class="retrato{% if chico %} chico{% endif %}">{% if p.retrato %}<img src="{{ p.retrato.url }}" alt="Retrato de {{ p.alias }}" loading="lazy" width="160" height="200">{% else %}<span class="monograma" aria-hidden="true">{{ p.alias|first }}</span>{% endif %}</figure>

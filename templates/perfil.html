@@ -5,8 +5,13 @@
   <article class="bloque papel" aria-labelledby="nombre">
     <p class="rotulo">Bestiario de jugadores · Folio {{ p.pk }}{% if propio %} · Tu ficha{% endif %}</p>
     {% if resultado and resultado.visible %}<div class="afinidad"><b class="num">{{ resultado.puntaje }}</b><span>AFINIDAD</span></div>{% endif %}
-    <h1 class="nombre" id="nombre">{{ p.alias }}</h1>
-    <p class="tipo">{{ p.get_rol_display }}, {{ p.get_experiencia_display|lower }}. {{ p.get_novatos_display }}.</p>
+    <div class="encabezado-ficha">
+      {% include "parciales/retrato.html" %}
+      <div>
+        <h1 class="nombre" id="nombre">{{ p.alias }}</h1>
+        <p class="tipo">{{ p.get_rol_display }}, {{ p.get_experiencia_display|lower }}. {{ p.get_novatos_display }}.</p>
+      </div>
+    </div>
     <hr class="regla">
     <h2 class="sr">Atributos</h2>
     <div class="atributos">
