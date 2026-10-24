@@ -1,0 +1,11 @@
+cryptography==50.0.2
+dj-database-url==3.1.2
+Django==5.2.18
+django-allauth==65.20.1
+django-htmx==1.29.0
+gunicorn==26.2.0
+psycopg==3.3.6
+psycopg-binary==3.3.6
+PyJWT==2.15.1
+requests==2.34.2
+whitenoise==6.12.0
