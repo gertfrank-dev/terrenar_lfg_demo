@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="contenedor portada">
+  <section class="entrada" aria-labelledby="titulo">
+    <p class="rotulo">Folio primero · Del arte de reunir una mesa</p>
+    <h1 id="titulo">Encuentra gente con quien <em>sí</em> quieras jugar</h1>
+    <p class="bajada"><span class="capitular" aria-hidden="true">L</span>os grupos de rol se arman por horario y se deshacen a la tercera sesión. Aquí el match mira además tu estilo de juego y tus límites, para que la mesa funcione desde la Sesión Cero.</p>
+    <div class="acciones">
+      <form method="post" action="{% url 'entrar_demo' %}">{% csrf_token %}<button class="btn" type="submit">Probar con un perfil de demo</button></form>
+      <a class="btn btn-linea" href="{% url 'account_signup' %}">Crear mi ficha</a>
+    </div>
+    <p class="nota">La demo entra como Valentina R., una máster ficticia. Hay {{ total }} fichas en el bestiario.</p>
+  </section>
+
+  <aside aria-label="Ejemplo de ficha">
+    <article class="bloque papel">
+      <p class="rotulo">Bestiario de jugadores · Ejemplo</p>
+      <div class="afinidad"><b>87</b><span>AFINIDAD</span></div>
+      <h2 class="nombre">Valentina R.</h2>
+      <p class="tipo">Máster, veterana, de mesa pausada y oscura</p>
+      <hr class="regla">
+      <div class="atributos">
+        <div>COMBATE<b>8</b></div><div>EXPLOR.<b>15</b></div><div>INTERP.<b>14</b></div>
+        <div>MISTERIO<b>13</b></div><div>ESTRAT.<b>10</b></div><div>HUMOR<b>12</b></div>
+      </div>
+      <hr class="regla">
+      <p class="linea-dato"><b>Coinciden.</b> Los dos pusieron su 15 en exploración; tono oscuro.</p>
+      <p class="linea-dato"><b>Guarida.</b> Ñuñoa o Discord, viernes de 20 a 24.</p>
+    </article>
+  </aside>
+</div>
+
+<section class="contenedor capas" aria-labelledby="como">
+  <h2 id="como" class="sr">Cómo funciona el match</h2>
+  <div class="capa">
+    <span class="cifra" aria-hidden="true">I</span>
+    <h2>¿Pueden jugar juntos?</h2>
+    <p>Horario de tus próximas cuatro semanas, presencial u online, tipo de campaña e idioma. Si no calza, no aparece.</p>
+  </div>
+  <div class="capa">
+    <span class="cifra" aria-hidden="true">II</span>
+    <h2>¿Lo pasarán bien?</h2>
+    <p>Repartes los dados del standard array entre seis atributos de juego y ajustas tus ejes de estilo. El puntaje explica en qué coinciden y en qué no.</p>
+  </div>
+  <div class="capa">
+    <span class="cifra" aria-hidden="true">III</span>
+    <h2>¿Se sentirán cómodos?</h2>
+    <p>Marcas tus líneas y velos. Son privadas: nadie las ve hasta que ambos marcan interés, y si chocan con lo que el otro busca, el match no se muestra.</p>
+  </div>
+</section>
+{% endblock %}

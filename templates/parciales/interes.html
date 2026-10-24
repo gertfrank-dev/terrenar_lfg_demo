@@ -1,0 +1,29 @@
+<section class="recuadro" id="interes" aria-labelledby="t-interes" aria-live="polite">
+  {% if mutuo %}
+    <p><span class="sello">INTERÉS MUTUO</span></p>
+    <h2 id="t-interes">Ya pueden hablar</h2>
+    <dl class="datos">
+      {% if p.contacto_discord %}<dt>Discord</dt><dd class="num" style="user-select:all">{{ p.contacto_discord }}</dd>{% endif %}
+      {% if p.contacto_correo %}<dt>Correo</dt><dd style="user-select:all">{{ p.contacto_correo }}</dd>{% endif %}
+    </dl>
+    <h3 class="rotulo">SUS LÍNEAS Y VELOS</h3>
+    {% include "parciales/limites.html" %}
+  {% elif yo %}
+    <h2 id="t-interes">¿Te gustaría jugar con {{ p.alias }}?</h2>
+    <p class="nota">Si los dos marcan interés, verán el contacto y los límites del otro.{% if p.es_demo %} En la demo, las fichas ficticias siempre responden.{% endif %}</p>
+  {% else %}
+    <h2 id="t-interes">¿Te gustaría jugar con {{ p.alias }}?</h2>
+    <p class="nota">Entra o crea tu ficha para ver tu afinidad y marcar interés.</p>
+    <a class="btn" href="{% url 'account_login' %}?next={{ request.path }}">Entrar</a>
+  {% endif %}
+  {% if yo and not mutuo %}
+  <form method="post" action="{% url 'interes' p.pk %}" hx-post="{% url 'interes' p.pk %}" hx-target="#interes" hx-swap="outerHTML">
+    {% csrf_token %}
+    <button class="btn {% if mi_interes %}btn-linea{% endif %}" type="submit">{% if mi_interes %}Quitar mi interés{% else %}Me interesa{% endif %}</button>
+  </form>
+  {% elif mutuo %}
+  <form method="post" action="{% url 'interes' p.pk %}" hx-post="{% url 'interes' p.pk %}" hx-target="#interes" hx-swap="outerHTML">
+    {% csrf_token %}<button class="enlace-btn" type="submit" style="text-decoration:underline">Retirar mi interés</button>
+  </form>
+  {% endif %}
+</section>

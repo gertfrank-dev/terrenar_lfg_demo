@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Explorar · Bestiario de Jugadores{% endblock %}
+{% block contenido %}
+<div class="contenedor">
+  <div class="titulo-pagina">
+    <p class="rotulo">Folio de búsqueda · {{ yo.alias }}</p>
+    <h1>Personas con quienes podrías jugar</h1>
+    <p>Ordenadas por afinidad. Solo ves a quienes comparten horario y modalidad contigo y no chocan con tus límites.</p>
+  </div>
+  <form hx-get="{% url 'explorar' %}" hx-target="#resultados" hx-swap="outerHTML" hx-trigger="change" hx-push-url="true">
+    <fieldset class="filtros">
+      <legend class="rotulo">Mostrar</legend>
+      <label><input type="radio" name="rol" value="todos" {% if filtro_rol == 'todos' %}checked{% endif %}><span>Todos</span></label>
+      <label><input type="radio" name="rol" value="jugador" {% if filtro_rol == 'jugador' %}checked{% endif %}><span>Jugadores</span></label>
+      <label><input type="radio" name="rol" value="master" {% if filtro_rol == 'master' %}checked{% endif %}><span>Másters</span></label>
+      <noscript><button class="btn" type="submit">Filtrar</button></noscript>
+    </fieldset>
+  </form>
+  {% include "parciales/resultados.html" %}
+</div>
+{% endblock %}

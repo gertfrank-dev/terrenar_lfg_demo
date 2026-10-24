@@ -1,0 +1,23 @@
+{% load humanize %}<section id="resultados" aria-live="polite" aria-label="Resultados">
+  <p class="nota" style="margin-bottom:1rem">{{ resultados|length }} compatible{{ resultados|length|pluralize }}{% if ocultos %} · {{ ocultos }} no calzan contigo{% endif %}.</p>
+  <div class="resultados">
+  {% for item in resultados %}{% with p=item.perfil r=item.r %}
+    <article class="bloque">
+      <div class="afinidad"><b class="num">{{ r.puntaje }}</b><span>AFINIDAD</span></div>
+      <h2 class="nombre"><a href="{% url 'perfil' p.pk %}">{{ p.alias }}</a></h2>
+      <p class="tipo">{{ p.get_rol_display }}, {{ p.get_experiencia_display|lower }}{% if p.mesa_pagada == 'cobra' %}, cobra ${{ p.precio|intcomma }} por sesión{% endif %}</p>
+      <hr class="regla">
+      <div class="atributos">
+        <div>COMBATE<b>{{ p.atr_combate }}</b></div><div>EXPLOR.<b>{{ p.atr_exploracion }}</b></div><div>INTERP.<b>{{ p.atr_interpretacion }}</b></div>
+        <div>MISTERIO<b>{{ p.atr_misterio }}</b></div><div>ESTRAT.<b>{{ p.atr_estrategia }}</b></div><div>HUMOR<b>{{ p.atr_humor }}</b></div>
+      </div>
+      <hr class="regla">
+      {% if r.coinciden %}<p class="linea-dato"><b>Coinciden.</b> {{ r.coinciden|join:"; " }}.</p>{% endif %}
+      {% if r.difieren %}<p class="linea-dato"><b>Difieren.</b> {{ r.difieren|join:"; " }}.</p>{% endif %}
+      {% if r.sesion_en_comun %}<p class="linea-dato"><b>Primera sesión posible.</b> {{ r.sesion_en_comun.0|date:"l j \d\e F" }}, desde las {{ r.sesion_en_comun.1 }}:00.</p>{% endif %}
+    </article>
+  {% endwith %}{% empty %}
+    <p class="vacio">No hay personas que calcen con este filtro. Prueba con "Todos".</p>
+  {% endfor %}
+  </div>
+</section>

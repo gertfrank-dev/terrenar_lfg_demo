@@ -1,0 +1,73 @@
+{% extends "base.html" %}{% load humanize %}
+{% block title %}{{ p.alias }} · Bestiario de Jugadores{% endblock %}
+{% block contenido %}
+<div class="contenedor perfil">
+  <article class="bloque papel" aria-labelledby="nombre">
+    <p class="rotulo">Bestiario de jugadores · Folio {{ p.pk }}{% if propio %} · Tu ficha{% endif %}</p>
+    {% if resultado and resultado.visible %}<div class="afinidad"><b class="num">{{ resultado.puntaje }}</b><span>AFINIDAD</span></div>{% endif %}
+    <h1 class="nombre" id="nombre">{{ p.alias }}</h1>
+    <p class="tipo">{{ p.get_rol_display }}, {{ p.get_experiencia_display|lower }}. {{ p.get_novatos_display }}.</p>
+    <hr class="regla">
+    <h2 class="sr">Atributos</h2>
+    <div class="atributos">
+      {% for nombre, valor in atributos %}<div>{{ nombre }}<b>{{ valor|default:"—" }}</b></div>{% endfor %}
+    </div>
+    <hr class="regla">
+    <h2 class="rotulo">EJES DE ESTILO</h2>
+    <ul class="ejes">
+      {% for nombre, bajo, alto, valor in ejes %}
+      <li class="eje">
+        <span class="n">{{ nombre }}</span>
+        <span class="pista" role="img" aria-label="{{ nombre }}: {{ valor }} de 5, entre {{ bajo|lower }} y {{ alto|lower }}">
+          {% for i in "12345" %}<i class="{% if forloop.counter <= valor %}on{% endif %}"></i>{% endfor %}
+        </span>
+        <span class="extremos" aria-hidden="true"><span>{{ bajo }}</span><span>{{ alto }}</span></span>
+      </li>
+      {% endfor %}
+    </ul>
+    <hr class="regla">
+    <dl class="datos">
+      <dt>Guarida</dt>
+      <dd>{% if p.modalidad != 'online' %}{{ p.comunas.all|join:", " }}{% endif %}{% if p.modalidad == 'ambas' %} · {% endif %}{% if p.modalidad != 'presencial' %}{{ p.plataformas.all|join:", " }}{% endif %}{% if p.anfitrion %} · puede ser anfitrión{% endif %}</dd>
+      <dt>Campañas</dt>
+      <dd>{{ campanas }}</dd>
+      <dt>Sistemas</dt>
+      <dd>{% for ps in p.perfilsistema_set.all %}{{ ps.sistema }}{% if ps.relacion == 'quiere' %} (quiere probar){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</dd>
+      <dt>Tono</dt><dd>{{ p.tonos.all|join:", " }}</dd>
+      <dt>Arquetipo</dt><dd>{{ p.arquetipos.all|join:", " }}</dd>
+      <dt>Mundos</dt><dd>{{ p.ambientaciones.all|join:", " }}</dd>
+      {% if p.mesa_pagada != 'gratis' %}<dt>Mesa pagada</dt><dd>{{ p.get_mesa_pagada_display }} · ${{ p.precio|intcomma }} por sesión</dd>{% endif %}
+    </dl>
+    {% if p.historia %}<hr class="regla"><h2 class="rotulo">LA MEJOR SESIÓN QUE HA JUGADO</h2><p class="historia">{{ p.historia }}</p>{% endif %}
+  </article>
+
+  <div class="lateral">
+    {% if resultado and resultado.visible %}
+    <section class="recuadro" aria-labelledby="t-afinidad">
+      <h2 id="t-afinidad">Por qué hacen match</h2>
+      {% if resultado.coinciden %}<p class="linea-dato"><b>Coinciden.</b> {{ resultado.coinciden|join:"; " }}.</p>{% endif %}
+      {% if resultado.difieren %}<p class="linea-dato"><b>Difieren.</b> {{ resultado.difieren|join:"; " }}.</p>{% endif %}
+      {% if resultado.sesion_en_comun %}<p class="linea-dato"><b>Primera sesión posible.</b> {{ resultado.sesion_en_comun.0|date:"l j \d\e F" }}, desde las {{ resultado.sesion_en_comun.1 }}:00.</p>{% endif %}
+    </section>
+    {% endif %}
+    {% if not propio %}{% include "parciales/interes.html" %}{% else %}
+    <section class="recuadro">
+      <h2>Tus límites</h2>
+      <p class="nota">Solo tú los ves. Se muestran a otra persona cuando ambos marcan interés.</p>
+      {% include "parciales/limites.html" %}
+    </section>
+    {% endif %}
+    <section class="recuadro" aria-labelledby="t-mesa">
+      <h2 id="t-mesa">En la mesa</h2>
+      <dl class="datos">
+        <dt>Herramientas</dt><dd>{{ p.herramientas.all|join:", "|default:"—" }}</dd>
+        <dt>No tolera</dt><dd>{{ p.conductas_no_tolera.all|join:", "|default:"—" }}</dd>
+        <dt>Ambiente</dt><dd>{{ p.ambiente }} de 5 (de enfocado a casual)</dd>
+        <dt>Alcohol</dt><dd>{{ p.get_alcohol_display }}</dd>
+        <dt>Tabaco</dt><dd>{{ p.get_tabaco_display }}</dd>
+        <dt>Amistad</dt><dd>{% if p.busca_amistad %}También busca hacer amigos{% else %}Viene a jugar{% endif %}</dd>
+      </dl>
+    </section>
+  </div>
+</div>
+{% endblock %}

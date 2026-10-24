@@ -1,0 +1,5 @@
+{% if limites %}
+<ul class="limites">
+  {% for l in limites %}<li><span class="estado estado-{{ l.estado }}">{{ l.get_estado_display|upper }}</span> {{ l.tema }}</li>{% endfor %}
+</ul>
+{% else %}<p class="nota">Sin líneas ni velos marcados.</p>{% endif %}

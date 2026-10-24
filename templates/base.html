@@ -1,0 +1,40 @@
+{% load static %}<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Bestiario de Jugadores · encuentra tu mesa de rol{% endblock %}</title>
+  <meta name="description" content="Encuentra personas para jugar rol de mesa según tu horario, tu estilo de juego y tus límites. Caso de práctica.">
+  <meta name="theme-color" content="#f1e8d4">
+  <link rel="preload" href="{% static 'fonts/im-fell-english-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{% static 'fonts/alegreya-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{% static 'css/bestiario.css' %}">
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="cabecera">
+    <div class="contenedor">
+      <a class="marca" href="{% url 'portada' %}"><span class="cap" aria-hidden="true">B</span><span aria-hidden="true">estiario</span><span class="sr">Bestiario de Jugadores, inicio</span><small aria-hidden="true">DEMO</small></a>
+      <nav class="nav" aria-label="Principal">
+        {% if user.is_authenticated %}
+          <a href="{% url 'explorar' %}" {% if request.resolver_match.url_name == 'explorar' %}aria-current="page"{% endif %}>Explorar</a>
+          <a href="{% url 'mi_perfil' %}">Mi ficha</a>
+          <form method="post" action="{% url 'account_logout' %}">{% csrf_token %}<button class="enlace-btn nav-salir" type="submit">Salir</button></form>
+        {% else %}
+          <a href="{% url 'account_login' %}">Entrar</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  {% if messages %}<ul class="mensajes contenedor">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+  <main id="contenido">{% block contenido %}{% endblock %}</main>
+  <footer class="pie">
+    <div class="contenedor">
+      <p><strong>Caso de práctica.</strong> Los perfiles que ves son ficticios y el sitio es una demo de portafolio.</p>
+      <p>Los nombres de sistemas como D&amp;D, Pathfinder o Call of Cthulhu son marcas de sus dueños; este sitio no está afiliado a ellos.</p>
+      <p>Diseño y desarrollo: <a href="https://github.com/gertfrank-dev">Gert Frank</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>
