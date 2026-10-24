@@ -2,6 +2,8 @@
 
 *El reino donde se juntan los roleros.*
 
+> **Demo en vivo:** [terrenar.onrender.com](https://terrenar.onrender.com) (la primera visita puede tardar ~1 minuto: el plan gratis se duerme).
+>
 > **Caso de práctica.** Sitio de "looking for group" para rol de mesa. Los perfiles de la demo son ficticios.
 
 Encuentra personas para jugar rol de mesa según tres preguntas:
@@ -86,7 +88,6 @@ docs/           brief, modelo de datos y capturas
 - **Siguiente:**
   - Skins a elección de cada persona (ciencia ficción, western…).
   - Login con Discord (requiere claves de una app de Discord).
-  - Deploy en Render.
 
 ## Avisos
 
