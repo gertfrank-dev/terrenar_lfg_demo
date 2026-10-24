@@ -184,8 +184,8 @@ dl.datos dd { margin: 0; min-width: 0; }
 
 /* ---- retrato: marco de miniatura iluminada; sin imagen, la inicial como capitular */
 .encabezado-ficha { display: flex; gap: 1rem; align-items: center; padding-right: 4.5rem; }
-.retrato { margin: 0; flex: none; width: 5.5rem; aspect-ratio: 4 / 5; border: 2px solid var(--oro); outline: 1px solid var(--rubrica); outline-offset: 3px; background: var(--vitela-honda); display: grid; place-items: center; overflow: hidden; }
-.retrato.chico { width: 3.6rem; }
+.retrato { margin: 0; flex: none; width: 8rem; aspect-ratio: 4 / 5; border: 2px solid var(--oro); outline: 1px solid var(--rubrica); outline-offset: 3px; background: var(--vitela-honda); display: grid; place-items: center; overflow: hidden; }
+.retrato.chico { width: 4.8rem; }
 .retrato img { width: 100%; height: 100%; object-fit: cover; }
 .monograma { font-family: var(--f-capitular); color: var(--rubrica); font-size: 3.4rem; line-height: 1; }
 .retrato.chico .monograma { font-size: 2.2rem; }
