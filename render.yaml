@@ -1,0 +1,21 @@
+# Plano de Render: crea el servicio web automáticamente desde el repo.
+services:
+  - type: web
+    name: bestiario
+    runtime: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.1
+      - key: DEBUG
+        value: "0"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false   # se pega a mano: la cadena de conexión de Supabase
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      - key: DISCORD_SECRET
+        sync: false
