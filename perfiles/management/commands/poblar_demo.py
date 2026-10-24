@@ -49,6 +49,19 @@ HISTORIAS = [
 ]
 
 
+# Retratos originales (generados con IA para la demo) y a quién pertenecen.
+RETRATOS = {
+    "Valentina R.": "mago-reglamento.jpg",
+    "Matías H.": "enano-taburete.jpg",
+    "Trinidad Z.": "hechicera-en-llamas.jpg",
+    "Cristóbal D.": "barbaro-tejedor.jpg",
+    "Constanza Y.": "sacerdotisa-curita.jpg",
+    "Catalina V.": "mediana-pastel.jpg",
+    "Maximiliano W.": "gnomo-bardo.jpg",
+    "Tomás F.": "montaraz-y-oso.jpg",
+}
+
+
 class Command(BaseCommand):
     help = "Carga catálogos y perfiles de demo"
 
@@ -166,5 +179,12 @@ class Command(BaseCommand):
         gore = m.Tema.objects.get(nombre="Gore")
         m.LimiteTema.objects.filter(perfil=val, tema=gore).update(estado="linea")
         m.LimiteTema.objects.filter(perfil=die, tema=gore).update(estado="busco")
+
+        from django.conf import settings
+
+        carpeta = settings.BASE_DIR / "static" / "demo"
+        for alias, archivo in RETRATOS.items():
+            if (carpeta / archivo).exists():
+                m.Perfil.objects.filter(alias=alias, es_demo=True).update(retrato_demo=archivo)
 
         self.stdout.write(self.style.SUCCESS(f"Listo: {m.Perfil.objects.filter(es_demo=True).count()} perfiles de demo."))

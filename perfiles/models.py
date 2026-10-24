@@ -140,6 +140,9 @@ class Perfil(models.Model):
         "Retrato de tu personaje o criatura", upload_to="retratos/", blank=True,
         help_text="Opcional. Si no subes uno, se muestra tu inicial como capitular.",
     )
+    # Solo para los perfiles de demo: retratos incluidos en el repositorio (static/demo/).
+    # Así la demo funciona en Render sin depender de archivos subidos.
+    retrato_demo = models.CharField(max_length=60, blank=True)
     contacto_discord = models.CharField(max_length=40, blank=True)
     contacto_correo = models.EmailField(blank=True)
     publicado = models.BooleanField(default=False)
