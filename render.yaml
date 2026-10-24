@@ -4,6 +4,7 @@ services:
     name: terrenar
     runtime: python
     plan: free
+    region: ohio   # cerca de Supabase (us-east-1): cada consulta viaja menos
     buildCommand: ./build.sh
     startCommand: gunicorn config.wsgi:application
     envVars:
