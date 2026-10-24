@@ -1,7 +1,7 @@
 # Plano de Render: crea el servicio web automáticamente desde el repo.
 services:
   - type: web
-    name: bestiario
+    name: terrenar
     runtime: python
     plan: free
     buildCommand: ./build.sh

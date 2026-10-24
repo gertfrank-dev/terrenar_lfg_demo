@@ -36,4 +36,4 @@ admin.site.register(m.Interes, list_display=("de", "a", "creado"))
 admin.site.register(m.Bloqueo, list_display=("de", "a", "creado"))
 admin.site.register(m.Disponibilidad, list_display=("perfil", "fecha", "bloque"), list_filter=("perfil",))
 
-admin.site.site_header = "Administración del Bestiario"
+admin.site.site_header = "Administración de Terrenar"

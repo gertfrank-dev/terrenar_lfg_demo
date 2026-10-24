@@ -75,7 +75,7 @@ class Command(BaseCommand):
             m.Tema.objects.update_or_create(nombre=n, defaults={"categoria": cat, "estado_por_defecto": defecto, "orden": i})
 
         User = get_user_model()
-        User.objects.filter(email__endswith="@demo.bestiario").delete()
+        User.objects.filter(email__contains="@demo.").delete()
 
         comunas = list(m.Comuna.objects.all())
         plataformas = list(m.Plataforma.objects.all())
@@ -90,7 +90,7 @@ class Command(BaseCommand):
 
         for n, alias in enumerate(ALIAS):
             user = User.objects.create_user(
-                username=f"demo{n}", email=f"demo{n}@demo.bestiario", password=None
+                username=f"demo{n}", email=f"demo{n}@demo.terrenar", password=None
             )
             rol = rnd.choices(["jugador", "master", "ambos"], weights=[6, 3, 2])[0]
             modalidad = rnd.choices(["presencial", "online", "ambas"], weights=[2, 3, 5])[0]

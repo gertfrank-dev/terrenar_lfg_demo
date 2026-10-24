@@ -15,7 +15,7 @@ from .forms import PASOS
 from .models import ATRIBUTOS, EJES, Interes, LimiteTema, Perfil, hay_interes_mutuo
 
 ATR_CORTOS = ("COMBATE", "EXPLOR.", "INTERP.", "MISTERIO", "ESTRAT.", "HUMOR")
-DEMO_EMAIL = "demo0@demo.bestiario"  # Valentina R., máster de la demo
+DEMO_EMAIL = "demo0@demo.terrenar"  # Valentina R., máster de la demo
 
 
 def portada(request):

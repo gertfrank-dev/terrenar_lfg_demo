@@ -1,9 +1,9 @@
 {% extends "base.html" %}{% load humanize %}
-{% block title %}{{ p.alias }} · Bestiario de Jugadores{% endblock %}
+{% block title %}{{ p.alias }} · Terrenar{% endblock %}
 {% block contenido %}
 <div class="contenedor perfil">
   <article class="bloque papel" aria-labelledby="nombre">
-    <p class="rotulo">Bestiario de jugadores · Folio {{ p.pk }}{% if propio %} · Tu ficha{% endif %}</p>
+    <p class="rotulo">Terrenar · Folio {{ p.pk }}{% if propio %} · Tu ficha{% endif %}</p>
     {% if resultado and resultado.visible %}<div class="afinidad"><b class="num">{{ resultado.puntaje }}</b><span>AFINIDAD</span></div>{% endif %}
     <div class="encabezado-ficha">
       {% include "parciales/retrato.html" %}

@@ -120,6 +120,7 @@ Selección múltiple:
 ## Por decidir
 
 - **Nombre:** "PlayerFinder" gusta, pero el dominio está tomado. Pendiente.
+- **Nombre:** Terrenar ("el reino donde se juntan los roleros"). Bestiario pasa a ser el nombre de la skin medieval.
 - **Dirección visual:** "Bestiario rubricado" (manuscrito antiguo; perfil como bloque de atributos), salvo objeción legal. Alternativa: "Registro del gremio".
 
 ## Fuera de alcance v1

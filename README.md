@@ -1,4 +1,6 @@
-# Bestiario de Jugadores (nombre provisorio)
+# Terrenar
+
+*El reino donde se juntan los roleros.*
 
 > **Caso de práctica.** Sitio de "looking for group" para rol de mesa. Los perfiles de la demo son ficticios.
 
@@ -19,7 +21,7 @@ Encuentra personas para jugar rol de mesa según tres preguntas:
 - **Reglas en la base de datos:** una restricción impide repetir dados, y una validación exige ser mayor de 18. La edad nunca se muestra ni se puede filtrar.
 - **25 pruebas automáticas** (`python manage.py test`), incluido el recorrido completo de crear una ficha.
 - **HTMX:** filtros y botón "Me interesa" sin recargar la página, con la lógica en Python.
-- **Diseño "Bestiario rubricado":** cada perfil se presenta como un bloque de estadísticas de manuscrito iluminado.
+- **Diseño "Bestiario rubricado":** cada perfil se presenta como un bloque de estadísticas de manuscrito iluminado. Es la primera *skin*; los colores viven en variables CSS para sumar otras (ciencia ficción, western) más adelante.
 
 ## Stack
 
@@ -64,6 +66,7 @@ docs/           brief, modelo de datos y capturas
   - Login con correo.
   - Crear tu ficha en 5 pasos: calendario "mi mes" (se pinta arrastrando), tirada de dados y checklist de líneas y velos.
 - **Siguiente:**
+  - Skins a elección de cada persona (ciencia ficción, western…).
   - Login con Discord (requiere claves de una app de Discord).
   - Deploy en Render.
 

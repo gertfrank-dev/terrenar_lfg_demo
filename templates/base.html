@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Bestiario de Jugadores · encuentra tu mesa de rol{% endblock %}</title>
+  <title>{% block title %}Terrenar · encuentra tu mesa de rol{% endblock %}</title>
   <meta name="description" content="Encuentra personas para jugar rol de mesa según tu horario, tu estilo de juego y tus límites. Caso de práctica.">
   <meta name="theme-color" content="#f1e8d4">
   <link rel="preload" href="{% static 'fonts/im-fell-english-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
@@ -15,7 +15,7 @@
   <a class="saltar" href="#contenido">Saltar al contenido</a>
   <header class="cabecera">
     <div class="contenedor">
-      <a class="marca" href="{% url 'portada' %}"><span class="cap" aria-hidden="true">B</span><span aria-hidden="true">estiario</span><span class="sr">Bestiario de Jugadores, inicio</span><small aria-hidden="true">DEMO</small></a>
+      <a class="marca" href="{% url 'portada' %}"><span class="cap" aria-hidden="true">T</span><span aria-hidden="true">errenar</span><span class="sr">Terrenar, inicio</span><small aria-hidden="true">DEMO</small></a>
       <nav class="nav" aria-label="Principal">
         {% if user.is_authenticated %}
           <a href="{% url 'explorar' %}" {% if request.resolver_match.url_name == 'explorar' %}aria-current="page"{% endif %}>Explorar</a>
