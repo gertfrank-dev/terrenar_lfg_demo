@@ -117,9 +117,8 @@ Selección múltiple:
 - **Estilo:** 6 atributos asignados con dados (standard array) + 6 ejes + letalidad.
 - **Stack:** Django + plantillas + HTMX; PostgreSQL alojado en Supabase (solo como base de datos); login con django-allauth (correo y Discord); app en Render.
 
-## Por decidir
+## Decisiones tomadas
 
-- **Nombre:** "PlayerFinder" gusta, pero el dominio está tomado. Pendiente.
 - **Nombre:** Terrenar ("el reino donde se juntan los roleros"). Bestiario pasa a ser el nombre de la skin medieval.
 - **Dirección visual:** "Bestiario rubricado" (manuscrito antiguo; perfil como bloque de atributos), salvo objeción legal. Alternativa: "Registro del gremio".
 

@@ -221,4 +221,3 @@ Unas 25 personas ficticias, marcadas con `es_demo = sí`, con perfiles variados 
 
 1. **Pesos del puntaje** (35/25/20/10/10): son mi propuesta inicial. Se pueden ajustar después de ver resultados con los datos de la demo.
 2. **¿Mostrar el puntaje a quien no tiene perfil completo?** Mi recomendación: no. Para ver matches hay que completar al menos las capas 1, 3 y 4.
-3. **Nombre del sitio:** sigue pendiente.

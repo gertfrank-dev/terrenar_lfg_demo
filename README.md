@@ -25,6 +25,17 @@ Encuentra personas para jugar rol de mesa según tres preguntas:
 - **HTMX:** filtros y botón "Me interesa" sin recargar la página, con la lógica en Python.
 - **Diseño "Bestiario rubricado":** cada perfil se presenta como un bloque de estadísticas de manuscrito iluminado. Es la primera *skin*; los colores viven en variables CSS para sumar otras (ciencia ficción, western) más adelante.
 
+## Rendimiento (Lighthouse)
+
+| | Performance | Accesibilidad | Buenas prácticas | SEO |
+|---|:---:|:---:|:---:|:---:|
+| Escritorio | 100 | 100 | 100 | 100 |
+| Móvil | 81 | 100 | 100 | 100 |
+
+Medido en la demo en vivo (octubre 2026). En móvil, Lighthouse simula un celular con 4G lento; las tipografías del estilo manuscrito son lo que más pesa.
+
+<img src="docs/lighthouse-escritorio.png" width="400" alt="Lighthouse escritorio: 100 en las cuatro categorías"> <img src="docs/lighthouse-movil.png" width="400" alt="Lighthouse móvil: 81, 100, 100, 100">
+
 ## Stack
 
 - Django 5.2 (LTS) + plantillas + HTMX.
