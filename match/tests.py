@@ -63,19 +63,19 @@ class FiltrosDuros(SimpleTestCase):
 
 class Seguridad(SimpleTestCase):
     def test_linea_contra_lo_busco_oculta_el_match(self):
-        r = evaluar(ficha(1, temas={"gore": "linea"}), ficha(2, temas={"gore": "busco"}))
+        r = evaluar(ficha(1, temas={"sangre": "linea"}), ficha(2, temas={"sangre": "busco"}))
         self.assertFalse(r.visible)
         self.assertEqual(r.motivo_oculto, "seguridad")
 
     def test_es_simetrico(self):
-        self.assertFalse(evaluar(ficha(1, temas={"gore": "busco"}), ficha(2, temas={"gore": "linea"})).visible)
+        self.assertFalse(evaluar(ficha(1, temas={"sangre": "busco"}), ficha(2, temas={"sangre": "linea"})).visible)
 
     def test_linea_contra_ok_si_se_muestra(self):
-        self.assertTrue(evaluar(ficha(1, temas={"gore": "linea"}), ficha(2, temas={"gore": "ok"})).visible)
+        self.assertTrue(evaluar(ficha(1, temas={"sangre": "linea"}), ficha(2, temas={"sangre": "ok"})).visible)
 
     def test_velo_contra_lo_busco_resta_puntos(self):
         base = evaluar(ficha(1), ficha(2)).puntaje
-        con_velo = evaluar(ficha(1, temas={"gore": "velo"}), ficha(2, temas={"gore": "busco"})).puntaje
+        con_velo = evaluar(ficha(1, temas={"sangre": "velo"}), ficha(2, temas={"sangre": "busco"})).puntaje
         self.assertEqual(base - con_velo, 5)
 
 

@@ -129,7 +129,7 @@ Un perfil tiene **muchos** bloques. Cada fila es una fecha real y un bloque de 2
 
 ## 5. Contenido y seguridad (Líneas y Velos)
 
-- **Tema:** el catálogo de temas, agrupados por categoría (arañas, gore, suicidio, PvP…). Los temas sexuales van separados en tres: **romance entre personajes**, **contenido sexual explícito** y **violencia sexual**. La violencia sexual viene marcada como *línea* por defecto, y la persona puede cambiarla.
+- **Tema:** el catálogo de temas, agrupados por categoría: fobias (arañas, espacios cerrados), intensidad (escenas sangrientas, terror psicológico), relaciones (romance, traiciones) y mesa (PvP, combates largos, humor). Cada tema trae un estado por defecto que la persona puede cambiar.
 - **LimiteTema:** una fila por persona y tema, con **cuatro** estados:
 
 | Estado | Significa |

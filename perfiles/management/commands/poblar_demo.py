@@ -27,12 +27,12 @@ CATALOGOS = {
                  "Interrumpir a otros"],
 }
 TEMAS = [
-    ("Arañas e insectos", "Fobias", "ok"), ("Espacios cerrados", "Fobias", "ok"), ("Gore", "Violencia", "ok"),
-    ("Tortura gráfica", "Violencia", "ok"), ("Daño a niños", "Violencia", "linea"), ("Daño a animales", "Violencia", "ok"),
-    ("Suicidio", "Salud mental", "ok"), ("Autolesiones", "Salud mental", "ok"), ("Adicciones", "Salud mental", "ok"),
-    ("Racismo", "Discriminación", "ok"), ("Esclavitud", "Discriminación", "ok"), ("Religión real", "Sociedad", "ok"),
-    ("Romance entre personajes", "Relaciones", "ok"), ("Contenido sexual explícito", "Relaciones", "ok"),
-    ("Violencia sexual", "Relaciones", "linea"), ("PvP entre jugadores", "Mesa", "ok"),
+    ("Arañas e insectos", "Fobias", "ok"), ("Espacios cerrados", "Fobias", "ok"), ("Payasos y muñecos", "Fobias", "ok"),
+    ("Escenas sangrientas", "Intensidad", "ok"), ("Terror psicológico", "Intensidad", "ok"),
+    ("Muerte de personajes", "Intensidad", "ok"), ("Animales en peligro", "Intensidad", "ok"),
+    ("Romance entre personajes", "Relaciones", "ok"), ("Traiciones entre aliados", "Relaciones", "ok"),
+    ("PvP entre jugadores", "Mesa", "ok"), ("Combates largos", "Mesa", "ok"), ("Acertijos y puzzles", "Mesa", "ok"),
+    ("Humor absurdo", "Mesa", "ok"),
 ]
 
 ALIAS = ["Valentina R.", "Tomás F.", "Camila S.", "Matías H.", "Javiera P.", "Benjamín C.", "Antonia M.", "Diego L.",
@@ -73,6 +73,8 @@ class Command(BaseCommand):
                 modelo.objects.get_or_create(nombre=n, defaults={"orden": i})
         for i, (n, cat, defecto) in enumerate(TEMAS):
             m.Tema.objects.update_or_create(nombre=n, defaults={"categoria": cat, "estado_por_defecto": defecto, "orden": i})
+        # Quita temas de catálogos anteriores que ya no están en la lista.
+        m.Tema.objects.exclude(nombre__in=[n for n, _, _ in TEMAS]).delete()
 
         User = get_user_model()
         User.objects.filter(email__contains="@demo.").delete()
@@ -158,7 +160,7 @@ class Command(BaseCommand):
                             bloques.append(m.Disponibilidad(perfil=p, fecha=f, bloque=h))
             m.Disponibilidad.objects.bulk_create(bloques)
 
-        # Un caso garantizado de "línea oculta el match": Valentina tiene Gore como línea; Diego lo busca.
+        # Un caso garantizado de "línea oculta el match": Valentina tiene "Escenas sangrientas" como línea; Diego las busca.
         val = m.Perfil.objects.get(alias="Valentina R.")
         die = m.Perfil.objects.get(alias="Diego L.")
         # Valentina es la cuenta de prueba de la demo: máster online, viernes y sábado de noche.
@@ -176,9 +178,9 @@ class Command(BaseCommand):
                 if f.weekday() in (4, 5):
                     for h in (20, 22):
                         m.Disponibilidad.objects.get_or_create(perfil=x, fecha=f, bloque=h)
-        gore = m.Tema.objects.get(nombre="Gore")
-        m.LimiteTema.objects.filter(perfil=val, tema=gore).update(estado="linea")
-        m.LimiteTema.objects.filter(perfil=die, tema=gore).update(estado="busco")
+        sangre = m.Tema.objects.get(nombre="Escenas sangrientas")
+        m.LimiteTema.objects.filter(perfil=val, tema=sangre).update(estado="linea")
+        m.LimiteTema.objects.filter(perfil=die, tema=sangre).update(estado="busco")
 
         from django.conf import settings
 

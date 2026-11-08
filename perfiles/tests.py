@@ -21,25 +21,25 @@ class Privacidad(TestCase):
     def setUp(self):
         self.ana = crear("ana")
         self.beto = crear("beto")
-        tema = Tema.objects.create(nombre="Tortura gráfica", categoria="Violencia")
+        tema = Tema.objects.create(nombre="Payasos y muñecos", categoria="Fobias")
         LimiteTema.objects.create(perfil=self.beto, tema=tema, estado="linea")
         self.client.force_login(self.ana.usuario)
 
     def test_sin_interes_mutuo_no_se_ven_lineas_ni_contacto(self):
         html = self.client.get(f"/p/{self.beto.pk}/").content.decode()
-        self.assertNotIn("Tortura gráfica", html)
+        self.assertNotIn("Payasos y muñecos", html)
         self.assertNotIn("beto#1", html)
 
     def test_interes_de_un_solo_lado_no_basta(self):
         Interes.objects.create(de=self.ana, a=self.beto)
         html = self.client.get(f"/p/{self.beto.pk}/").content.decode()
-        self.assertNotIn("Tortura gráfica", html)
+        self.assertNotIn("Payasos y muñecos", html)
 
     def test_con_interes_mutuo_se_ven_automaticamente(self):
         Interes.objects.create(de=self.ana, a=self.beto)
         Interes.objects.create(de=self.beto, a=self.ana)
         html = self.client.get(f"/p/{self.beto.pk}/").content.decode()
-        self.assertIn("Tortura gráfica", html)
+        self.assertIn("Payasos y muñecos", html)
         self.assertIn("beto#1", html)
 
     def test_la_edad_nunca_aparece(self):

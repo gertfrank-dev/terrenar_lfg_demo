@@ -17,7 +17,7 @@ Las líneas son privadas: nunca aparecen en el perfil público y se muestran aut
 
 ## Problema
 
-Los grupos de rol se arman por logística (día, hora, plataforma) y se desarman a la tercera sesión porque nadie preguntó por gustos ni por límites. Un jugador que odia el gore termina en una mesa grimdark; un táctico termina en una mesa 100% narrativa.
+Los grupos de rol se arman por logística (día, hora, plataforma) y se desarman a la tercera sesión porque nadie preguntó por gustos ni por límites. Un jugador que odia las escenas sangrientas termina en una mesa grimdark; un táctico termina en una mesa 100% narrativa.
 
 ## Público
 
@@ -76,12 +76,11 @@ Selección múltiple:
 - **Ambientaciones:** fantasía clásica, sci-fi, steampunk, horror cósmico o western.
 
 ### 4. Contenido y seguridad: Líneas y Velos
-- **Checklist por tema** con cuatro estados: **lo busco**, OK, velo o línea. Temas, entre otros:
-  - Arañas, fobias, adicciones, suicidio, racismo, religión, esclavitud, PvP, daño a niños, tortura gráfica y gore.
-  - Tres temas sexuales por separado:
-    - **Romance entre personajes** (besos, relaciones).
-    - **Contenido sexual explícito** (descrito en escena).
-    - **Violencia sexual**, que viene marcada como línea por defecto.
+- **Checklist por tema** con cuatro estados: **lo busco**, OK, velo o línea. Los temas van en cuatro grupos:
+  - **Fobias:** arañas e insectos, espacios cerrados, payasos y muñecos.
+  - **Intensidad:** escenas sangrientas, terror psicológico, muerte de personajes, animales en peligro.
+  - **Relaciones:** romance entre personajes, traiciones entre aliados.
+  - **Mesa:** PvP entre jugadores, combates largos, acertijos y puzzles, humor absurdo.
 - **Herramientas que espera en la mesa:** X-Card, Sesión Cero y pausas.
 - **Comportamientos que no tolera:** celulares en la mesa, metagaming, "es lo que haría mi personaje"…
 - **Privacidad:** las líneas nunca aparecen en el perfil público. Cuando dos personas marcan interés mutuo, se muestran automáticamente a ambas.
